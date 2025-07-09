@@ -1,5 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, FlatList, Switch, TouchableHighlight, ScrollView, Alert, Modal, Pressable, KeyboardAvoidingView, TouchableWithoutFeedback, TextInput, Platform, Keyboard } from 'react-native';
+import {
+  StyleSheet, Text, View, Image, FlatList, Switch, TouchableHighlight, ScrollView, Alert, Modal, Pressable, KeyboardAvoidingView,
+  TouchableWithoutFeedback, TextInput, Platform, Keyboard, ActivityIndicator
+} from 'react-native';
 import { useState } from 'react'; 
 
 export default function App() {
@@ -19,6 +22,8 @@ export default function App() {
   const handlePress = () => {
     setMensaje('¡Has presionado el botón!');
   };
+
+  const [loading, setLoading] = useState(false);
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -120,9 +125,9 @@ export default function App() {
           Para usarlo lo importamos, luego en nuestro return lo incluimos envolviendo en una etiqueta todo lo que queremos que sea deslizable, esta app tiene un ScrollView en toda la pantalla.
         </Text>
 
-        <Text style={styles.tituloLista}>8. KeyboardAvoidingView</Text>
+        <Text style={styles.tituloLista}>8. KeyboardAvoidingView 9.Pressable</Text>
 <Text style={styles.texto}>
-  Este componente evita que el teclado cubra los inputs. Se usa con TextInput y se ajusta según el sistema operativo. También usamos TouchableWithoutFeedback para cerrar el teclado al tocar fuera.
+          Este componente evita que el teclado cubra los inputs. Se usa con TextInput y se ajusta según el sistema operativo. También usamos TouchableWithoutFeedback para cerrar el teclado al tocar fuera. El pressable es un componente que puede ser presionado para hacer una acción, buena alternativa a un botón.
 </Text>
 
 <KeyboardAvoidingView
@@ -144,6 +149,24 @@ export default function App() {
   </TouchableWithoutFeedback>
 </KeyboardAvoidingView>
 
+        <Text style={styles.tituloLista}>10. ActivityIndicator</Text>
+        <Text style={styles.texto}>
+          Este componente muestra un ícono de carga girando. Es útil para mostrar que algo está en proceso, como una descarga o petición. Creamos una constante para cada estado del componente y las llamamos aqui asignando una acción a cada estado.
+        </Text>
+
+        <Pressable style={styles.buttonOpen} onPress={() => setLoading(true)}>
+          <Text style={styles.textoBoton}>Cargar información</Text>
+        </Pressable>
+
+        {loading && (
+          <View style={styles.loaderContainer}>
+            <ActivityIndicator size="large" color="#0000ff" />
+            <Text style={styles.texto}>Cargando...</Text>
+          </View>
+        )}
+
+        <Text style={styles.tituloLista}>¡Gracias por leer!</Text>
+        <Image source={require('./assets/imagenbp.png')} style={styles.imagen} />
 
       </View>
     </ScrollView>
@@ -253,4 +276,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
+  loaderContainer: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
 });
